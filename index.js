@@ -1,6 +1,6 @@
 import process from "process";
 
-const [, , comando, recurso, ...args] = process.argv;
+const [, , comando, path, ...args] = process.argv;
 const API_URL = "https://fakestoreapi.com";
 
 async function getProducts() {
@@ -58,14 +58,14 @@ async function deleteProduct(id) {
   }
 }
 
-if (comando === "GET" && recurso) {
-  if (recurso.includes("/")) {
-    const [, id] = recurso.split("/");
+if (comando === "GET" && path) {
+  if (path.includes("/")) {
+    const [, id] = path.split("/");
     getProductById(id);
   } else {
     getProducts();
   }
-} else if (comando === "POST" && recurso) {
+} else if (comando === "POST" && path) {
   if (args.length < 3) {
     console.error(
       "Error: Tenes que pasar title, price y category (ej: POST products 'Remera' 1500 'ropa')",
@@ -74,13 +74,13 @@ if (comando === "GET" && recurso) {
     const [title, price, category] = args;
     createProduct(title, price, category);
   }
-} else if (comando === "DELETE" && recurso) {
-  if (!recurso.includes("/")) {
+} else if (comando === "DELETE" && path) {
+  if (!path.includes("/")) {
     console.error(
-      "Error: Para DELETE tenes que pasar el recurso con ID (ej: products/1)",
+      "Error: Para DELETE tenes que pasar el path con ID (ej: products/1)",
     );
   } else {
-    const [, id] = recurso.split("/");
+    const [, id] = path.split("/");
     deleteProduct(id);
   }
 } else {
