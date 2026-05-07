@@ -28,7 +28,7 @@ async function getProductById(id) {
 async function createProduct(title, price, category) {
   const product = {
     title,
-    price: Number(price),
+    price,
     category,
   };
   try {
